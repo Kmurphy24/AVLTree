@@ -7,6 +7,12 @@ public class AVLDriver {
 		String line;
 		Book element;
 		AVLTree<Book> avl = new AVLTree<Book>();
+		int unsuccessfulComparisons = 0;
+		int successfulComparisons = 0;
+		int unsuccessfulSearches = 0;
+		int successfulSearches = 0;
+		IntObject searchCount = new IntObject(0);
+		int count = 0;
 
 		try {
 			Scanner inFile = new Scanner(new FileInputStream("Books.txt"));
@@ -27,6 +33,62 @@ public class AVLDriver {
 			inFile.close();
 			out.println("All " + avl.size()
 					+ " elements have been inserted into the " + "AVL tree");
+			out.println();
+			out.println("The height of the tree is " + avl.height());
+			out.println();
+
+			out.println("The minimum element in the tree is: ");
+			out.println(avl.first());
+
+			out.println("\nThe maximum element in the tree is: ");
+			out.println(avl.last());
+			out.println();
+			out.println();
+			while (testFile.hasNextLine()) {
+				line = testFile.nextLine();
+				element = new Book();
+				element.setIsbn(line);
+				searchCount.setData(0);
+				Book result = avl.find(element, searchCount);
+				if (result != null) {
+					out.println("Sucessful Search!!!");
+					out.println(result);
+					out.println("The number of comparisons made for "
+							+ "this succeesful search is "
+							+ searchCount.getData());
+					out.println();
+					out.println();
+					successfulComparisons += searchCount.getData();
+					successfulSearches++;
+				} else { // key is not found in the BST
+					out.println("There is no book with ISBN "
+							+ element.getIsbn());
+					out.println("The number of comparisons made for "
+							+ "this unsucceesful search is "
+							+ searchCount.getData());
+					out.println();
+
+					unsuccessfulComparisons += searchCount.getData();
+					unsuccessfulSearches++;
+				} // else
+			} // while
+
+			out.println("There were " + successfulSearches
+					+ " successful searches");
+			if (successfulSearches > 0)
+				out.println("The average number of comparisons for a "
+						+ "successful search is "
+						+ (double) successfulComparisons / successfulSearches);
+			out.println();
+
+			out.println("There were " + unsuccessfulSearches
+					+ " unsuccessful searches");
+			if (unsuccessfulSearches > 0)
+				out.println("The average number of comparisons for "
+						+ "an unsuccessful search is "
+						+ (double) unsuccessfulComparisons
+						/ unsuccessfulSearches);
+
 			testFile.close();
 			out.close();
 		} catch (IOException e) {

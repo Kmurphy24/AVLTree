@@ -1,16 +1,25 @@
-
 public class IntObject {
-	private int data;
-	
-	public IntObject(int someData){
-		data = someData;
-	}
-	
-	public int getObject(){
-		return data;
-	}
-	
-	public void setObject(int someData){
-		data = someData;
-	}
+   private int data;
+
+
+   /** Constructor
+       @param aData the value for the instance variable
+     */
+   public IntObject (int aData) {
+      data = aData;
+   }
+
+   /** Accessor method
+       @return the value of the instance variable
+     */
+   public int getData() {
+      return data;
+   }
+
+   /** Mutator method
+       @param someData the new value for the instance variable
+     */
+   public void setData(int someData) {
+      data = someData;
+   }
 }
